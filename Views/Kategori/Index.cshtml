@@ -1,0 +1,38 @@
+﻿
+@using MvcStok.Models.Entity    <!-- entity klasörünü bağla model değeri tanımla o değeride veritabanındaki kategoriler verilerini listele -->
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Kategoriler>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>KATEGORİ ID </th> <!-- tablo oluştur -->
+        <th>KATEGORİ ADI </th>
+        <th>SİL</th><!--SİLME VE GÜNCELLEME SÜTUNU EKLEDİM-->
+        <th>GÜNCELLE</th>
+    </tr>
+    <tbody>
+        <!--  foreach (değişken türü , değişken ismi , içinden(in) , nereden alıcam(model) 3.satır )-->
+        <!--  VERİLERİ LİSTELEME -->
+        @foreach (var ktgr in Model)
+        {
+            <tr>
+                <td> @ktgr.KategoriID</td>
+                <td>@ktgr.KategoriAdı</td>
+                <td> <a href="/Kategori/Sil/ @ktgr.KategoriID" class="btn btn-danger"> Sil</a></td> 
+                <td> <a href="/Kategori/KategoriGetir/ @ktgr.KategoriID" class="btn btn-success"> Güncelle</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new {sayfa}))
+
+<a href="/Kategori/YeniKategori" class="btn btn-primary">Yeni Kategori Ekle </a>
+
+
+
